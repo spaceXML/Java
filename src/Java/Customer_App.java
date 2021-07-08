@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
 import javax.swing.BorderFactory;
@@ -22,9 +24,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Customer_App {
 
@@ -35,6 +44,7 @@ public class Customer_App {
 	private JTextField age;
 	private JTextField phone;
 	private JTextField gender;
+	private JTextField search;
 
 	/**
 	 * Launch the application.
@@ -68,6 +78,49 @@ public class Customer_App {
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 		//함으로써 패널을 사용할수있다.
+		JPanel tablepanel = new JPanel();
+		tablepanel.setBounds(0, 0, 1008, 667);
+		tablepanel.setVisible(true);
+		//setVisible으로 트루 펄스로 그창이 먼저 보여지게끔 할수있다.
+//		먼저보여지는 조건은 1첫번째 순서에 둬야지만 가능하다.
+		String[][] data = customer.getCustomers();
+		//
+		String[] headers = new String[] {"Name","Phone","Gender", "Age","Note"};
+		tablepanel.setLayout(null);
+		JTable table = new JTable(data,headers);
+		table.setRowHeight(30);
+		table.setFont(new Font("Sanserif",Font.BOLD, 15));
+		table.setAlignmentX(0);
+		table.setSize(800,500);
+		table.setPreferredScrollableViewportSize(new Dimension(800, 500));
+		
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(103, 113, 802, 407);
+		tablepanel.add(scrollPane);
+		frame.getContentPane().add(tablepanel);
+		
+		search = new JTextField();
+		search.setFont(new Font("바탕체", Font.BOLD, 17));
+		search.setBounds(103, 29, 802, 55);
+		tablepanel.add(search);
+		search.setColumns(10);
+		search.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				String val = search.getText();			
+//				검색기능 추가하기
+				TableRowSorter<TableModel> trs = new TableRowSorter<>(table.getModel());
+				table.setRowSorter(trs);//TableRowSorter = new TableRowSorter<> 같기때문에 <>으로 하면 검색가능.
+			//  setRowSorter =테이블로 데이터 옴기기 라네요.
+				trs.setRowFilter(RowFilter.regexFilter(val));
+		         //보이드를 쓰면 임폴트를해야된다..
+				
+			}
+		});
+		
+		TableColumnModel columnModels = table.getColumnModel();
+		columnModels.getColumn(0).setPreferredWidth(100);
+		
+		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setBounds(0, 0, 1008, 667);
 		frame.getContentPane().add(mainPanel);
@@ -156,10 +209,17 @@ public class Customer_App {
 			  String genderTxt = gender.getSelectedItem().toString();
 			  String notetxt = note.getText();
 			  
-			  Customer.createCustomer(nameTxt, phoneTxt, genderTxt, ageTxt, notetxt);
+				JPanel tablepanel = new JPanel();
+				tablepanel.setBounds(0, 0, 1008, 667);
+				frame.getContentPane().add(tablepanel);
+//			  Customer.createCustomer(nameTxt, phoneTxt, genderTxt, ageTxt, notetxt);
 			  JOptionPane.showMessageDialog(null, "Your data has been saved successfully");
+			  mainPanel.setVisible(false);
+			  //버튼이 누르면 창이 닫게되는데 + 다른창만들어서 붙이기
 			}
 		});
+		
+		
 		
 		btnNewButton_1.setBounds(336, 517, 310, 64);
 		mainPanel.add(btnNewButton_1);
@@ -171,6 +231,7 @@ public class Customer_App {
 		
 		ImagePanel welcomPanel = new ImagePanel(new ImageIcon("C:/Java_study/workspace/Javasolak/image/welcome1.jpg").getImage());
 		welcomPanel.setBounds(0, 0, 1008, 729);
+		
 		
 		//=-----------------------------------------------
 		//메인패널위로 위치변동하고 mainPanel.setVisible(false); 막기
@@ -217,6 +278,8 @@ public class Customer_App {
 		btnNewButton.setPressedIcon(new ImageIcon("C:\\java_study\\workspace\\Javasolak\\image\\button11_clicked.jpg"));
 		btnNewButton.setBounds(370, 241, 288, 242);
 		welcomPanel.add(btnNewButton);
+		
+	
 		
 		
 		
