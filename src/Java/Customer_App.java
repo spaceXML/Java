@@ -1,5 +1,6 @@
 package Java;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,10 +31,10 @@ public class Customer_App {
 	private JFrame frame;
 	private JTextField id;
 	private JPasswordField password;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField name;
+	private JTextField age;
+	private JTextField phone;
+	private JTextField gender;
 
 	/**
 	 * Launch the application.
@@ -62,6 +64,7 @@ public class Customer_App {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		Customer customer = new Customer();
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 		//함으로써 패널을 사용할수있다.
@@ -113,33 +116,35 @@ public class Customer_App {
 		lblNewLabel_4_5.setBounds(527, 313, 173, 71);
 		mainPanel.add(lblNewLabel_4_5);
 		
-		textField = new JTextField();
-		textField.setBounds(332, 126, 183, 38);
-		mainPanel.add(textField);
-		textField.setColumns(10);
+		name = new JTextField();
+		name.setBounds(332, 126, 183, 38);
+		mainPanel.add(name);
+		name.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(332, 227, 183, 38);
-		mainPanel.add(textField_1);
+		age = new JTextField();
+		age.setColumns(10);
+		age.setBounds(332, 227, 183, 38);
+		mainPanel.add(age);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(692, 126, 183, 38);
-		mainPanel.add(textField_3);
+		phone = new JTextField();
+		phone.setColumns(10);
+		phone.setBounds(692, 126, 183, 38);
+		mainPanel.add(phone);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(692, 227, 183, 38);
-		mainPanel.add(textField_4);
+		gender = new JTextField();
+		gender.setColumns(10);
+		gender.setBounds(692, 227, 183, 38);
+		mainPanel.add(gender);
 		
 		JComboBox gender = new JComboBox(new String[] {"Male","Female"});
+		gender.setFont(new Font("휴먼엑스포", Font.PLAIN, 40));
 		gender.setBounds(332, 327, 183, 46);
 		mainPanel.add(gender);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(692, 338, 243, 266);
-		mainPanel.add(textArea);
+		JTextArea note = new JTextArea();
+		note.setBounds(692, 338, 243, 266);
+		note.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		mainPanel.add(note);
 		
 		JButton btnNewButton_1 = new JButton("Submit");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -148,11 +153,11 @@ public class Customer_App {
 			  String nameTxt = name.getText();
 			  String ageTxt = age.getText();
 			  String phoneTxt = phone.getText();
-			  String bTxt = birthday.getText();
 			  String genderTxt = gender.getSelectedItem().toString();
 			  String notetxt = note.getText();
 			  
-//			  Customer customer = new Customer(nameTxt,ageTxt);
+			  Customer.createCustomer(nameTxt, phoneTxt, genderTxt, ageTxt, notetxt);
+			  JOptionPane.showMessageDialog(null, "Your data has been saved successfully");
 			}
 		});
 		
@@ -322,4 +327,3 @@ class ImagePanel extends JPanel {
 			
 			
 }
-
