@@ -78,15 +78,34 @@ public class Customer_App {
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 		//함으로써 패널을 사용할수있다.
-		JPanel tablepanel = new JPanel();
-		tablepanel.setBounds(0, 0, 1008, 667);
-		tablepanel.setVisible(true);
+		
+		
+		
+
+		ImagePanel mainPanel = new ImagePanel(new ImageIcon("C:/Java_study/workspace/Javasolak/image/List.PNG").getImage());
+		ImagePanel welcomPanel = new ImagePanel(new ImageIcon("C:/Java_study/workspace/Javasolak/image/welcome1.jpg").getImage());
+		ImagePanel tablepanel = new ImagePanel(new ImageIcon("C:/Java_study/workspace/Javasolak/image/List.PNG").getImage());
+		//JPanel -> imagePanel
+		
+		
+		frame.getContentPane().add(tablepanel);
+		mainPanel.setBounds(0, 0, 1008, 667);
+		frame.getContentPane().add(mainPanel);
+		mainPanel.setLayout(null);
+		mainPanel.setVisible(true);
+//		---------------------------------------------------------------------------------------------순서변경권은 frame 이였다.
+		
+		
+		
+		//JPanel에서 
+		
 		//setVisible으로 트루 펄스로 그창이 먼저 보여지게끔 할수있다.
 //		먼저보여지는 조건은 1첫번째 순서에 둬야지만 가능하다.
 		String[][] data = customer.getCustomers();
 		//
 		String[] headers = new String[] {"Name","Phone","Gender", "Age","Note"};
 		tablepanel.setLayout(null);
+		
 		JTable table = new JTable(data,headers);
 		table.setRowHeight(30);
 		table.setFont(new Font("Sanserif",Font.BOLD, 15));
@@ -95,15 +114,29 @@ public class Customer_App {
 		table.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(103, 113, 802, 407);
+		scrollPane.setBounds(223, 91, 773, 566);
 		tablepanel.add(scrollPane);
-		frame.getContentPane().add(tablepanel);
+	
 		
 		search = new JTextField();
 		search.setFont(new Font("바탕체", Font.BOLD, 17));
-		search.setBounds(103, 29, 802, 55);
+		search.setBounds(223, 26, 773, 55);
 		tablepanel.add(search);
 		search.setColumns(10);
+		
+		JButton btnNewButton_2 = new JButton("New button");
+		btnNewButton_2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		btnNewButton_2.setIcon(new ImageIcon("C:\\java_study\\workspace\\Javasolak\\image\\Rister.PNG"));
+		btnNewButton_2.setBounds(24, 48, 158, 74);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tablepanel.setVisible(false);
+				mainPanel.setVisible(true);
+			}
+		});
+		
+		
+		tablepanel.add(btnNewButton_2);
 		search.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				String val = search.getText();			
@@ -118,19 +151,19 @@ public class Customer_App {
 		});
 		
 		TableColumnModel columnModels = table.getColumnModel();
+		//컬럼 크기 조절하는곳
 		columnModels.getColumn(0).setPreferredWidth(100);
+		columnModels.getColumn(2).setPreferredWidth(50);
+		columnModels.getColumn(3).setPreferredWidth(20);
 		
 		
-		JPanel mainPanel = new JPanel();
-		mainPanel.setBounds(0, 0, 1008, 667);
-		frame.getContentPane().add(mainPanel);
-		mainPanel.setLayout(null);
-		mainPanel.setVisible(false);
+		
+		
 		//mainPanel.setVisible 처음화면에서 메인창 보여주지않게 만들기 명령어
 		
-		JLabel lblNewLabel_3 = new JLabel("MainPanel wellcome to join us .");
+		JLabel lblNewLabel_3 = new JLabel("51Area wellcome to join us .");
 		lblNewLabel_3.setFont(new Font("휴먼엑스포", Font.PLAIN, 30));
-		lblNewLabel_3.setBounds(244, 32, 532, 65);
+		lblNewLabel_3.setBounds(343, 29, 532, 65);
 		mainPanel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("name");
@@ -229,7 +262,23 @@ public class Customer_App {
 		btnNewButton_1.setBounds(332, 530, 261, 71);
 		mainPanel.add(btnNewButton_1);
 		
-		ImagePanel welcomPanel = new ImagePanel(new ImageIcon("C:/Java_study/workspace/Javasolak/image/welcome1.jpg").getImage());
+		JButton btnNewButton_3 = new JButton("New button");
+		btnNewButton_3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		btnNewButton_3.setIcon(new ImageIcon("C:\\java_study\\workspace\\Javasolak\\image\\Listbutton.PNG"));
+		btnNewButton_3.setBounds(40, 164, 126, 137);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mainPanel.setVisible(false);
+				tablepanel.setVisible(true);
+				//tablepanel 표 데이터가 들어간값이니까 ture
+				//
+			
+			}
+		});
+		
+		mainPanel.add(btnNewButton_3);
+		
+		
 		welcomPanel.setBounds(0, 0, 1008, 729);
 		
 		
@@ -248,7 +297,7 @@ public class Customer_App {
 		
 		id.setHorizontalAlignment(SwingConstants.RIGHT);
 		//Variable 값에 id 를 써서 공통값 변경
-		id.setText("ENTER ID");
+		id.setText("ENTER ID");  // 로그인창에 "ENTER ID" 표시
 		id.setToolTipText("ENTER ID");
 		id.setBounds(226, 302, 134, 54);
 		welcomPanel.add(id);
@@ -292,12 +341,16 @@ public class Customer_App {
 			public void actionPerformed(ActionEvent e) {
 				
 			if(id.getText(). equals("51Area")&&Arrays.equals(password.getPassword(),"dr.kim".toCharArray())) {
+							//id.getText()= 값 51ARea 
+														//
+				
 				System.out.println("Wellcome to Dr.KIM in 51Area");
 				JOptionPane.showMessageDialog(null, "Wellcome to Dr.KIM in 51Area");
 				welcomPanel.setVisible(false);
 				// 로그인 성공시에 창닫기
 				mainPanel.setVisible(true);
 				//로그인 성공시 다음창으로넘어가기
+				//로그인 성공과 실패로 구분하게만들수있는부분.
 				
 				
 				}else{
